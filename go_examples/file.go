@@ -10,7 +10,7 @@ import (
 func main() {
 
 	filename := "sample.txt"
-        fmt.Println("Create file "  + filename)
+	fmt.Println("Create file " + filename)
 	file, err := os.Create(filename)
 	if err != nil {
 		log.Fatal(err)
@@ -18,11 +18,11 @@ func main() {
 	file.WriteString("This is Sheng-Laing Song.")
 	file.Close()
 
-        fmt.Println("Read file "  + filename)
+	fmt.Println("Read file " + filename)
 	stream, err := ioutil.ReadFile(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
 	readString := string(stream)
-        fmt.Println(readString)
+	fmt.Println(readString)
 }

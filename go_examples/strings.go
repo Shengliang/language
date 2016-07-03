@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strings"
-        "sort"
 )
 
 func main() {

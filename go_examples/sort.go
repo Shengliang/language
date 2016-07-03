@@ -13,6 +13,7 @@ type Person struct {
 func (p Person) String() string {
 	return fmt.Sprintf("%s: %d", p.name, p.age)
 }
+
 type MySort []Person
 
 func (a MySort) Len() int      { return len(a) }

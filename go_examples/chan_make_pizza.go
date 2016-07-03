@@ -10,7 +10,7 @@ var pizza = ""
 func makeDough(stringChan chan string) {
 	pizzaNum++
 	pizza = "Pizza #" + strconv.Itoa(pizzaNum)
-        fmt.Println("S1: Make Dough" + pizza)
+	fmt.Println("S1: Make Dough" + pizza)
 	stringChan <- pizza
 	time.Sleep(time.Millisecond * 10)
 }

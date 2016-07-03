@@ -18,6 +18,6 @@ func main() {
 	fmt.Println(a, b)
 	swap(&a, &b)
 	fmt.Println(a, b)
-        x, y := swap2(a,b)
+	x, y := swap2(a, b)
 	fmt.Println(x, y)
 }
