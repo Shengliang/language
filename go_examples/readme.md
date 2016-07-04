@@ -1,8 +1,10 @@
 go reference: 
 
-http://www.newthinktank.com/2015/02/go-programming-tutorial/
+https://tour.golang.org/
 
 https://golang.org/pkg/sort/
+
+http://www.newthinktank.com/2015/02/go-programming-tutorial/
 
 $ go version
 
