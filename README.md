@@ -1,0 +1,20 @@
+# Examples of different programming languages
+awk
+bash
+c
+c++
+c#
+clojure
+go
+haskell
+java
+javascript
+objective-c
+perl
+php
+python
+ruby
+scala
+sed
+sql
+swift
