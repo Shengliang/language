@@ -1,0 +1,35 @@
+{
+    "links": [
+        {
+            "grade": 200, 
+            "links": [
+                {
+                    "name": "python", 
+                    "score": 100, 
+                    "type": "PA"
+                }, 
+                {
+                    "name": "C", 
+                    "score": 100, 
+                    "type": "PA"
+                }
+            ], 
+            "name": "Alice", 
+            "type": "Student"
+        }, 
+        {
+            "grade": 100, 
+            "links": [
+                {
+                    "name": "python", 
+                    "score": 100, 
+                    "type": "PA"
+                }
+            ], 
+            "name": "Bob", 
+            "type": "Student"
+        }
+    ], 
+    "name": "4357 Embedded Firmware", 
+    "type": "Class"
+}
