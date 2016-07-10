@@ -1,0 +1,5 @@
+ cat s.txt | sed -e 's/[Tt]hy/your/g' 
+ cat s.txt | sed -e 's/[Tt]hy/{&}/g'  
+ cat k.txt | sed 's/^.... .... ..../**** **** ****/g'
+ cat k.txt | sed 's/^\(....\) \(....\) \(....\) \(....\)/\4 \3 \2 \1/g'
+ cat s.txt | sed -e '1,11 d' -e '23,$ d'

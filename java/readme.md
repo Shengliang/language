@@ -10,3 +10,7 @@ $ sudo apt-get install default-jdk
 # Javac Version
 $ javac -version
 javac 1.8.0_91
+
+# Install Java Plugin for firefox
+sudo apt-get install icedtea-plugin
+http://askubuntu.com/questions/354361/how-to-install-the-java-plugin-for-firefox/354406
