@@ -1,14 +1,27 @@
-function timeout_printHello(){
-   console.log( "Timeout:Hello, World!");
-}
-function repeat_printHello(){
-   console.log( "Hello, World!");
-}
-// Now call above function after 2 seconds
-var t = setTimeout(timeout_printHello, 2000);
+var waitTime = 3000;
+var currTime = 0;
+var waitInterval = 500;
+var percentWaited = 0;
 
-// Now call above function after 2 seconds
-setInterval(repeat_printHello, 1000);
+function waiting(percent) {
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write(`waiting .. ${percent}`);
+}
 
-// Now clear the timer
-clearTimeout(t);
+// Now call the function after waitInterval seconds
+var interval = setInterval(function() {
+   currTime += waitInterval;
+   percentWaited = Math.floor((currTime/waitTime)*100);
+   waiting(percentWaited);
+}, waitInterval);
+
+// Now call the function after waitTime.
+var t = setTimeout(function(){
+   clearInterval(interval);
+   waiting(100);
+   console.log( "done");
+}, waitTime);
+
+process.stdout.write("\n\n");
+waiting(percentWaited);

@@ -1,5 +1,9 @@
 # Node.js
 Node.js = Runtime Environment + JavaScript Library
+- single-threaded
+- asynchronous
+- events are raised and queued, and handled in FIFO order.
+
 
 # How to Install Node.js on Unbuntu 16.04?
 https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04
