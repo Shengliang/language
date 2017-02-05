@@ -45,7 +45,7 @@ int is_stack_grow_up(void) {
 
 void check_stack_heap(int depth) {
     char c;
-    char *ptr = malloc(1);
+    char *ptr = (char*) malloc(1024);
     printf("stack at %p, heap at %p\n", &c, ptr);
     if (depth <= 0) return;
     check_stack_heap(depth-1);
@@ -62,6 +62,9 @@ int main(void) {
         hdr.signiture.d8[1] = 0x62;
         hdr.signiture.d8[2] = 0x63;
         hdr.signiture.d8[3] = 0x64;
+	hdr.len = 1024;
+	hdr.offset = 256;
+	hdr.crc32  = (uint32_t)-1;
 
         printf("d32=0x%04X.\n", hdr.signiture.d32);
 	for(int i=0; i<4; i++) {
@@ -105,7 +108,8 @@ void memory_layout(IMG_HDR* hdr)
     printf("memory_layout         = %p\n", memory_layout);
     printf("main                  = %p\n", main);
 
-    for(int i=-2; i < sizeof(IMG_HDR)/sizeof(int); i++) {
+    int sz = sizeof(IMG_HDR)/sizeof(int);
+    for(int i=-2; i < sz; i++) {
 	printf("mem[%02d] %08X\n", i, mem[i]);
     }
     free(heap_hdr);
