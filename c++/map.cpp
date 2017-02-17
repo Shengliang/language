@@ -20,12 +20,28 @@ size_t name_hash( const Name & name )
 {
     return hash<string>()(name.first) ^ hash<string>()(name.second);
 }
+class A {
+	public:
+	int a;
+		A(int x=0):a(x) {cout << "new A" << this << " " << a << endl; }
+		~A() { cout << __FUNCTION__ << ":" << this << " " << a << endl; }
+		A(const A& x) : a(x.a) { 
+		   cout << "new A: " << __FUNCTION__ << " " << this << " " << a << endl; }
+};
+
+ostream & operator<<(ostream & out, const A&a) {
+	return out << a.a << endl;
+}
 
 int main(int argc, char* argv[])
 {
-    unordered_map<Name,int,function<decltype(name_hash)>> ids(100, name_hash );
-    ids[Name("Mark", "Nelson")] = 40561;
-    ids[Name("Andrew","Binstock")] = 40562;
+    unordered_map<Name,A,function<decltype(name_hash)>> ids(100, name_hash );
+    auto && mark  = Name("Mark", "Nelson");
+    auto && andrew = Name("Andrew","Binstock");
+    cout << "Init mark" << endl;
+    ids[mark] = 40561;
+    cout << "Init andrew" << endl;
+    ids[andrew] = 40562;
     for ( auto ii = ids.begin() ; ii != ids.end() ; ii++ )
         cout << ii->first.first
                      << " "
@@ -35,6 +51,12 @@ int main(int argc, char* argv[])
                      << endl;
 
 
+    {
+	    cout << "copy map entry" << endl;
+    const auto& x = ids[andrew];
+    ids.erase(andrew);
+    cout << "xyz==\n" << endl;
+    }
 
   multimap<char,int> mymm;
   multimap<char,int>::iterator it;
