@@ -113,3 +113,7 @@ void func()
       std::atomic_signal_fence(std::memory_order_acquire);
       std::atomic_thread_fence(std::memory_order_acquire);
 }
+int main(void){
+   clock_volatile();
+   return 0;
+}

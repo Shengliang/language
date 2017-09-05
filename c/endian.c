@@ -94,6 +94,10 @@ void memory_layout(IMG_HDR* hdr)
     IMG_HDR* heap_hdr =  (IMG_HDR*)malloc(sizeof(IMG_HDR));
     int stack_buf[BUF_SIZE];
     int* mem = (int*) heap_hdr;
+    unsigned long long x = (unsigned long long) -1;
+    unsigned long long y = x >> 12;
+    unsigned long long z = y << 12;
+    printf("%llx %llx %llx\n", x, y, z);
 
     for(int i=0; i < BUF_SIZE; i++) stack_buf[i] = i;
 
