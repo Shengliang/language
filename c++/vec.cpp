@@ -4,6 +4,7 @@
 #include<stdint.h>
 
 using namespace std;
+uint64_t mask = (((uint64_t)-1ULL));
 
 struct P {
   int64_t x = 0LL;
@@ -13,9 +14,22 @@ struct P {
 };
 
 int main(void) {
+ vector<P>  vec;
+ cout << (vec.begin() == vec.end()) << " " << vec.size() << endl;
  vector<P>  points(10);
  cout << points[0].x << " " << points[0].y << endl;
  points[0] =  P(1, 2);
  cout << points[0].x << " " << points[0].y << endl;
+ cout << hex << mask << endl;
+ std::vector<P>::iterator it = points.begin();
+ if (it != points.end()) {
+ cout << it->x << " " << it->y << " " << sizeof(it) << " " << sizeof(unsigned long) <<  endl;
+    unsigned long lx = *((unsigned long*) &it);
+    const std::vector<P>::iterator& iit = *((const std::vector<P>::iterator*) &lx);
+    cout << hex << lx << " " << iit->x << " " << iit->y << endl;
+
+ }
+
+
  return 0;
 }
