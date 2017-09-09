@@ -47,32 +47,27 @@ void list_op(struct node_t * r, func_t op, void* ctx)
 
 /*
 list_tail_append:
-	lw	$2,4($4)     # $2 = list->tail
-	beq	$2,$0,.L15   # go to L15 if list->tail == NULL
+	lw	$2,4($4)    # $2 = list->tail
+	beq	$2,$0,.L15  # go L15 if list->tail == NULL
 	nop
-.L13:
-	sw	$5,4($2)  # list->tial->next = n
-	jr	$31       # else return
-	sw	$5,4($4)  # list->tail = n
+
+	sw	$5,4($2)   # list->tail->next = n
+	jr	$31        # else case return
+	sw	$5,4($4)   # list->tail = n
 
 .L15:
-	lw	$3,0($4)     # $3 = list->head
-	bne	$3,$0,.L13   # go to L13 if list->head == NULL
-	nop
-
-	sw	$5,0($4)     # list->head = n
-	jr	$31          # return if list->tail ==  NULL && list->head == NULL
-	sw	$5,4($4)     # list->tail = n
+	sw	$5,0($4)   # list->head = n
+	jr	$31        # return if list->tail ==  NULL
+	sw	$5,4($4)   # list->tail = n
 */
 void list_tail_append(struct list_t *list, struct node_t* n)
 {
-	if (list->tail ==  NULL && list->head == NULL) {
+	if (list->tail ==  NULL) {
 		list->head = n;
-		list->tail = n;
 	} else {
 		list->tail->next = n;
-		list->tail = n;
 	}
+	list->tail = n;
 }
 
 
