@@ -17,8 +17,7 @@ struct AddressField {
     uint64_t wd_idx : 2;
     uint64_t offset : 4;
     uint64_t index  : 8;
-    uint64_t tag    : 18;
-    uint64_t pad    : 32;
+    uint64_t tag    : 50;
 };
 
 union Address {
@@ -28,7 +27,7 @@ union Address {
 
 struct Cell {
    bool v;
-   uint32_t tag;
+   uint64_t tag;
    uint32_t data[BS];
    Cell() : v(false), tag(0) {
      memset(data, 0, sizeof(data));
@@ -41,19 +40,24 @@ struct Cell {
 	 addr.p = address;
 	 addr.fields.offset  = 0;
 	 addr.fields.wd_idx  = 0;
+#if 0 /* skip since address is fake. */
 	 for (int i = 0; i < BS; i++) {
                data[i] = addr.p[i];
          }
+#endif
          tag = addr.fields.tag;
          v = true;
    }
 };
 
 ostream& operator<<(ostream & out, const Cell& cell) {
-	out << " v:" << cell.v << " tag:" << hex << cell.tag << " data:";
+	out << " v:" << cell.v << " tag:" << hex << cell.tag;
+#if 0
+	out << " data:";
         for (int i = 0; i < BS; i++)  {
 		out << " " << cell.data[i];
         }
+#endif
 	return out;
 }
 
@@ -93,6 +97,11 @@ four-way set associative - three bits
 #define LINE_1_MASK 6
 #define LINE_2_MASK 5
 #define LINE_3_MASK 5
+
+#define LINE_0_VALUE 0
+#define LINE_1_VALUE 2
+#define LINE_2_VALUE 4
+#define LINE_3_VALUE 5
 struct Block {
    Cell cell[NWAY];
    uint32_t state;
@@ -111,14 +120,20 @@ struct Block {
    void setLRU(uint32_t* address) {
          int way = 0;
 	 uint32_t st = state;
-         uint32_t mask[] = { 
+         uint32_t mask[] = {
 		LINE_0_MASK,
 		LINE_1_MASK,
 		LINE_2_MASK,
 		LINE_3_MASK
          };
+         uint32_t value[] = {
+		LINE_0_VALUE,
+		LINE_1_VALUE,
+		LINE_2_VALUE,
+		LINE_3_VALUE
+         };
 	 for (int i = 0; i < NWAY; ++i) {
-	   if ( (state & mask[i]) == 0) {
+	   if ( (state & mask[i]) == value[i]) {
              state ^= mask[i];
 	     way = i;
 	     break;
@@ -149,7 +164,7 @@ struct Block {
            case 3: state ^= LINE_2_MASK; break;
            default: assert(0);
            }
-           *p = *address;
+           // *p = *address; //skip since address is fake.
            return HIT;
        } else {
           setLRU(address);
@@ -196,55 +211,34 @@ ostream& operator<<(ostream & out, const Cache& cache) {
 #include<stdio.h>
 
 // #define MS 10000
-#define MS  256
+// #define MS  256
 // #define MS  16
-
-uint32_t m1[MS][MS];
-uint32_t m2[MS][MS];
-uint32_t res[MS][MS];
+ #define MS  64
 
 Cache cache;
-void multiply(uint32_t m1[][MS], uint32_t m2[][MS])
+void multiply(uint32_t* m1, uint32_t* m2, uint32_t* res)
 {
     int x, i, j;
     for (i = 0; i < MS; i++) {
         for (j = 0; j < MS; j++) {
-            cache.access(&res[i][j]);
-            res[i][j] = 0;
+            cache.access(res + i*MS +j);
             for (x = 0; x < MS; x++) {
-		cache.access(&m1[i][x]);
-		cache.access(&m1[x][j]);
-		cache.access(&res[i][j]);
-                res[i][j] += m1[i][x] * m2[x][j];
-		cache.access(&res[i][j]);
+		cache.access(m1 + i*MS + x);
+		cache.access(m2 + x*MS + j);
+                cache.access(res + i*MS +j);
+                // res[i][j] += m1[i][x] * m2[x][j];
+                cache.access(res + i*MS +j);
             }
         }
     }
-#if 0
-    for (i = 0; i < MS; i++) {
-        for (j = 0; j < MS; j++) {
-            printf("%d ", res[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-#endif
-}
-
-void init(uint32_t m[][MS])
-{
-  for(int i=0; i<MS; i++) {
-    for(int j=0; j<MS; j++) {
-        m[i][j] = i*MS +j;
-    }
-  }
 }
 
 int main()
 {
-    init(m1);
-    init(m2);
-    multiply(m1, m2);
+    uint32_t* m1 = (uint32_t*) 0xFACE00A000000000LL;  // fake virtual address; don’t access it
+    uint32_t* m2 = (uint32_t*) 0xFACE00B000000000LL;  // fake virtual address; don’t access it
+    uint32_t* res =  (uint32_t*) 0xFACE00C000000000LL; // fake virtual address; don’t access it
+    multiply(m1, m2, res);
     cout << cache << endl;
     return 0;
 }
