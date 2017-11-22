@@ -32,7 +32,7 @@ struct Cell {
    Cell() : v(false), tag(0) {
      memset(data, 0, sizeof(data));
    }
-   bool isHit(uint32_t tag) {
+   bool isHit(uint64_t tag) {
      return v && (tag == this->tag);
    }
    void fetch(uint32_t* address) {
@@ -102,12 +102,19 @@ four-way set associative - three bits
 #define LINE_1_VALUE 2
 #define LINE_2_VALUE 4
 #define LINE_3_VALUE 5
+
+#define LINE_0_NEXT_VALUE 6
+#define LINE_1_NEXT_VALUE 4
+#define LINE_2_NEXT_VALUE 1
+#define LINE_3_NEXT_VALUE 0
+
+
 struct Block {
    Cell cell[NWAY];
    uint32_t state;
    Block() : state(0){ }
 
-   uint32_t* getByTag(uint32_t tag, int* pway) {
+   uint32_t* getByTag(uint64_t tag, int* pway) {
       for (int i=0; i<NWAY; ++i) {
          if (cell[i].isHit(tag)) {
 	    *pway = i;
@@ -140,7 +147,7 @@ struct Block {
            }
 	 }
          cell[way].fetch(address);
-         cout << "way:" << way << " address:" << address << " state:" << st << "->" << state << endl;
+         cout << "MISS: way:" << way << " address:" << address << " state:" << st << "->" << state << endl;
    }
 
    uint32_t* get(uint32_t* address, int *pway) {
@@ -157,14 +164,24 @@ struct Block {
        int way = 0;
        uint32_t* p = get(address, &way);
        if (p != NULL) {
-	   switch (way) {
-           case 0:
-           case 1: state ^= LINE_0_MASK; break;
-           case 2:
-           case 3: state ^= LINE_2_MASK; break;
-           default: assert(0);
-           }
-           // *p = *address; //skip since address is fake.
+         uint32_t mask[] = {
+		LINE_0_MASK,
+		LINE_1_MASK,
+		LINE_2_MASK,
+		LINE_3_MASK
+         };
+         uint32_t next_value[] = {
+		LINE_0_NEXT_VALUE,
+		LINE_1_NEXT_VALUE,
+		LINE_2_NEXT_VALUE,
+		LINE_3_NEXT_VALUE
+         };
+printf("HIT: address:%p ref_to way:%d state %X --> ", address, way, state);
+	 state &= ~mask[way];
+printf("%X --> ", state);
+	 state |= next_value[way];
+printf("%X\n", state);
+          // *p = *address; //skip since address is fake.
            return HIT;
        } else {
           setLRU(address);
@@ -198,7 +215,7 @@ struct Cache {
 
 };
 ostream& operator<<(ostream & out, const Cache& cache) {
-	out << "Hit: " << cache.count[HIT] <<  " Miss: " << cache.count[MISS] << std::endl;
+	out << "\n==Summary==\n\tHit: " << cache.count[HIT] <<  " Miss: " << cache.count[MISS] << std::endl;
 	for (int i = 0; i < NLINE; i++) {
             out << cache.block[i] << endl;
         }
@@ -212,8 +229,8 @@ ostream& operator<<(ostream & out, const Cache& cache) {
 
 // #define MS 10000
 // #define MS  256
-// #define MS  16
- #define MS  64
+ #define MS  16
+// #define MS  64
 
 Cache cache;
 void multiply(uint32_t* m1, uint32_t* m2, uint32_t* res)
