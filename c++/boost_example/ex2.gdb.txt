@@ -1,0 +1,137 @@
+
+   void bug1_inc() {
+      scoped_lock_t(this->m_mutex);
+      ++m_i;
+   }
+(gdb) disassemble bug1_inc
+Dump of assembler code for function AInt::bug1_inc():
+   0x000000000040773c <+0>:	push   %rbp
+   0x000000000040773d <+1>:	mov    %rsp,%rbp
+   0x0000000000407740 <+4>:	sub    $0x20,%rsp
+   0x0000000000407744 <+8>:	mov    %rdi,-0x18(%rbp)
+   0x0000000000407748 <+12>:	mov    -0x18(%rbp),%rax
+   0x000000000040774c <+16>:	lea    0x8(%rax),%rdx
+   0x0000000000407750 <+20>:	lea    -0x10(%rbp),%rax
+   0x0000000000407754 <+24>:	mov    %rdx,%rsi
+   0x0000000000407757 <+27>:	mov    %rax,%rdi
+   0x000000000040775a <+30>:	callq  0x407eea <boost::unique_lock<boost::mutex>::unique_lock(boost::mutex&)>
+   0x000000000040775f <+35>:	lea    -0x10(%rbp),%rax
+   0x0000000000407763 <+39>:	mov    %rax,%rdi
+   0x0000000000407766 <+42>:	callq  0x407f1c <boost::unique_lock<boost::mutex>::~unique_lock()>
+=> 0x000000000040776b <+47>:	mov    -0x18(%rbp),%rax
+   0x000000000040776f <+51>:	mov    (%rax),%eax
+   0x0000000000407771 <+53>:	lea    0x1(%rax),%edx
+   0x0000000000407774 <+56>:	mov    -0x18(%rbp),%rax
+   0x0000000000407778 <+60>:	mov    %edx,(%rax)
+   0x000000000040777a <+62>:	leaveq 
+   0x000000000040777b <+63>:	retq   
+End of assembler dump.
+
+(gdb) p m_mutex
+$2 = {m = {__data = {__lock = 0, __count = 0, __owner = 0, __nusers = 0, __kind = 0, __spins = 0, __list = {__prev = 0x0, __next = 0x0}}, 
+    __size = '\000' <repeats 39 times>, __align = 0}}
+
+
+
+
+   void bug2_inc() {
+      scoped_lock_t(m_mutex);
+      ++m_i;
+   }
+(gdb) disassemble bug2_inc
+Dump of assembler code for function AInt::bug2_inc():
+   0x000000000040777c <+0>:	push   %rbp
+   0x000000000040777d <+1>:	mov    %rsp,%rbp
+   0x0000000000407780 <+4>:	sub    $0x20,%rsp
+   0x0000000000407784 <+8>:	mov    %rdi,-0x18(%rbp)
+=> 0x0000000000407788 <+12>:	lea    -0x10(%rbp),%rax
+   0x000000000040778c <+16>:	mov    %rax,%rdi
+   0x000000000040778f <+19>:	callq  0x408756 <boost::unique_lock<boost::mutex>::unique_lock()>
+   0x0000000000407794 <+24>:	mov    -0x18(%rbp),%rax
+   0x0000000000407798 <+28>:	mov    (%rax),%eax
+   0x000000000040779a <+30>:	lea    0x1(%rax),%edx
+   0x000000000040779d <+33>:	mov    -0x18(%rbp),%rax
+   0x00000000004077a1 <+37>:	mov    %edx,(%rax)
+   0x00000000004077a3 <+39>:	lea    -0x10(%rbp),%rax
+   0x00000000004077a7 <+43>:	mov    %rax,%rdi
+   0x00000000004077aa <+46>:	callq  0x407f1c <boost::unique_lock<boost::mutex>::~unique_lock()>
+   0x00000000004077af <+51>:	leaveq 
+   0x00000000004077b0 <+52>:	retq   
+End of assembler dump.
+(gdb) p m_mutex
+$15 = {m = 0x610868 <g_x+8>, is_locked = true}
+(gdb) p m_mutex->m
+$16 = (boost::mutex *) 0x610868 <g_x+8>
+(gdb) p &m_mutex
+$17 = (scoped_lock_t *) 0x7ffff602edb0
+(gdb) p &(this->m_mutex)
+$19 = (mutex_t *) 0x610868 <g_x+8>
+
+
+
+   void ok_inc() {
+      scoped_lock_t lock(m_mutex);
+      ++m_i;
+   }
+(gdb) disassemble ok_inc
+Dump of assembler code for function AInt::ok_inc():
+   0x00000000004077b2 <+0>:	push   %rbp
+   0x00000000004077b3 <+1>:	mov    %rsp,%rbp
+   0x00000000004077b6 <+4>:	push   %rbx
+   0x00000000004077b7 <+5>:	sub    $0x28,%rsp
+   0x00000000004077bb <+9>:	mov    %rdi,-0x28(%rbp)
+   0x00000000004077bf <+13>:	mov    -0x28(%rbp),%rax
+   0x00000000004077c3 <+17>:	lea    0x8(%rax),%rdx
+   0x00000000004077c7 <+21>:	lea    -0x20(%rbp),%rax
+   0x00000000004077cb <+25>:	mov    %rdx,%rsi
+   0x00000000004077ce <+28>:	mov    %rax,%rdi
+   0x00000000004077d1 <+31>:	callq  0x407eea <boost::unique_lock<boost::mutex>::unique_lock(boost::mutex&)>
+=> 0x00000000004077d6 <+36>:	mov    -0x28(%rbp),%rax
+   0x00000000004077da <+40>:	mov    (%rax),%eax
+   0x00000000004077dc <+42>:	lea    0x1(%rax),%edx
+   0x00000000004077df <+45>:	mov    -0x28(%rbp),%rax
+   0x00000000004077e3 <+49>:	mov    %edx,(%rax)
+   0x00000000004077e5 <+51>:	mov    -0x28(%rbp),%rax
+   0x00000000004077e9 <+55>:	mov    (%rax),%ebx
+   0x00000000004077eb <+57>:	callq  0x4069e2 <std::this_thread::get_id()>
+   0x00000000004077f0 <+62>:	mov    %rax,%rsi
+   0x00000000004077f3 <+65>:	mov    $0x610540,%edi
+   0x00000000004077f8 <+70>:	callq  0x408773 <std::operator<< <char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, std::thread::id)>
+   0x00000000004077fd <+75>:	mov    $0x40af87,%esi
+   0x0000000000407802 <+80>:	mov    %rax,%rdi
+   0x0000000000407805 <+83>:	callq  0x406060 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@plt>
+   0x000000000040780a <+88>:	mov    %ebx,%esi
+   0x000000000040780c <+90>:	mov    %rax,%rdi
+   0x000000000040780f <+93>:	callq  0x405f50 <_ZNSolsEi@plt>
+   0x0000000000407814 <+98>:	mov    $0xa,%esi
+   0x0000000000407819 <+103>:	mov    %rax,%rdi
+   0x000000000040781c <+106>:	callq  0x406020 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c@plt>
+   0x0000000000407821 <+111>:	lea    -0x20(%rbp),%rax
+   0x0000000000407825 <+115>:	mov    %rax,%rdi
+   0x0000000000407828 <+118>:	callq  0x407f1c <boost::unique_lock<boost::mutex>::~unique_lock()>
+   0x000000000040782d <+123>:	jmp    0x407849 <AInt::ok_inc()+151>
+   0x000000000040782f <+125>:	mov    %rax,%rbx
+---Type <return> to continue, or q <return> to quit---
+   0x0000000000407832 <+128>:	lea    -0x20(%rbp),%rax
+   0x0000000000407836 <+132>:	mov    %rax,%rdi
+   0x0000000000407839 <+135>:	callq  0x407f1c <boost::unique_lock<boost::mutex>::~unique_lock()>
+   0x000000000040783e <+140>:	mov    %rbx,%rax
+   0x0000000000407841 <+143>:	mov    %rax,%rdi
+   0x0000000000407844 <+146>:	callq  0x406260 <_Unwind_Resume@plt>
+   0x0000000000407849 <+151>:	add    $0x28,%rsp
+   0x000000000040784d <+155>:	pop    %rbx
+   0x000000000040784e <+156>:	pop    %rbp
+   0x000000000040784f <+157>:	retq   
+End of assembler dump.
+
+Thread 2 "ex2" hit Breakpoint 7, AInt::ok_inc (this=0x610860 <g_x>) at ex2.cpp:36
+36	      ++m_i;
+(gdb) p m_mutex
+$11 = {m = {__data = {__lock = 1, __count = 0, __owner = 98626, __nusers = 1, __kind = 0, __spins = 0, __list = {__prev = 0x0, 
+        __next = 0x0}}, __size = "\001\000\000\000\000\000\000\000B\201\001\000\001", '\000' <repeats 26 times>, __align = 1}}
+(gdb) p lock
+$12 = {m = 0x610868 <g_x+8>, is_locked = true}
+(gdb) p lock->m
+$13 = (boost::mutex *) 0x610868 <g_x+8>
+(gdb) p &m_mutex
+$14 = (mutex_t *) 0x610868 <g_x+8>
