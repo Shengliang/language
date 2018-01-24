@@ -42,7 +42,11 @@ public:
       ok_inc();
       return *this;
    }
-   int& operator--() {  scoped_lock_t lock(this->m_mutex); --m_i; return m_i;}
+   AInt& operator--() {
+	scoped_lock_t lock(this->m_mutex);
+	-m_i;
+	return *this;
+   }
    int get() const { return m_i; }
    // friend std::ostream& operator<<(std::ostream& out, const AInt& a);
 };
