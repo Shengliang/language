@@ -36,11 +36,11 @@ public:
       ++m_i;
       std::cout << std::this_thread::get_id() << ": " << m_i << '\n';
    }
-   int& operator++() {
+   AInt& operator++() {
       bug1_inc();
       bug2_inc();
       ok_inc();
-      return m_i;
+      return *this;
    }
    int& operator--() {  scoped_lock_t lock(this->m_mutex); --m_i; return m_i;}
    int get() const { return m_i; }
