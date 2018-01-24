@@ -4,6 +4,5 @@ all:
 	\g++ -g -std=c++11 ex2.cpp -pthread -lboost_thread -lboost_system -o ex2
 
 run:
-	export LD_LIBRARY_PATH=/usr/local/lib  
-	./ex2
+	LD_LIBRARY_PATH=/usr/local/lib  ./ex2
 
