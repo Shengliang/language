@@ -44,7 +44,7 @@ public:
    }
    AInt& operator--() {
 	scoped_lock_t lock(this->m_mutex);
-	-m_i;
+	--m_i;
 	return *this;
    }
    int get() const { return m_i; }
