@@ -1,0 +1,245 @@
+
+a.out:	file format Mach-O 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+__text:
+100000dd0:	55 	pushq	%rbp
+100000dd1:	48 89 e5 	movq	%rsp, %rbp
+100000dd4:	40 80 ff 07 	cmpb	$7, %dil
+100000dd8:	7f 20 	jg	32 <_Func1+0x2A>
+100000dda:	48 0f be c7 	movsbq	%dil, %rax
+100000dde:	48 8d 0d 3b 02 10 00 	leaq	1049147(%rip), %rcx
+100000de5:	48 0f be 04 01 	movsbq	(%rcx,%rax), %rax
+100000dea:	48 c1 e0 0c 	shlq	$12, %rax
+100000dee:	48 8d 0d 2b 02 00 00 	leaq	555(%rip), %rcx
+100000df5:	8a 04 01 	movb	(%rcx,%rax), %al
+100000df8:	eb 02 	jmp	2 <_Func1+0x2C>
+100000dfa:	31 c0 	xorl	%eax, %eax
+100000dfc:	0f be c0 	movsbl	%al, %eax
+100000dff:	5d 	popq	%rbp
+100000e00:	c3 	retq
+100000e01:	66 66 66 66 66 66 2e 0f 1f 84 00 00 00 00 00 	nopw	%cs:(%rax,%rax)
+100000e10:	55 	pushq	%rbp
+100000e11:	48 89 e5 	movq	%rsp, %rbp
+100000e14:	83 ff 07 	cmpl	$7, %edi
+100000e17:	7f 1f 	jg	31 <_Func4+0x28>
+100000e19:	48 63 c7 	movslq	%edi, %rax
+100000e1c:	48 8d 0d fd 01 10 00 	leaq	1049085(%rip), %rcx
+100000e23:	48 0f be 04 01 	movsbq	(%rcx,%rax), %rax
+100000e28:	48 c1 e0 0c 	shlq	$12, %rax
+100000e2c:	48 8d 0d ed 01 00 00 	leaq	493(%rip), %rcx
+100000e33:	8a 04 01 	movb	(%rcx,%rax), %al
+100000e36:	eb 02 	jmp	2 <_Func4+0x2A>
+100000e38:	31 c0 	xorl	%eax, %eax
+100000e3a:	0f be c0 	movsbl	%al, %eax
+100000e3d:	5d 	popq	%rbp
+100000e3e:	c3 	retq
+100000e3f:	90 	nop
+100000e40:	55 	pushq	%rbp
+100000e41:	48 89 e5 	movq	%rsp, %rbp
+100000e44:	48 83 ff 07 	cmpq	$7, %rdi
+100000e48:	77 1c 	ja	28 <_Func8+0x26>
+100000e4a:	48 8d 05 cf 01 10 00 	leaq	1049039(%rip), %rax
+100000e51:	48 0f be 04 38 	movsbq	(%rax,%rdi), %rax
+100000e56:	48 c1 e0 0c 	shlq	$12, %rax
+100000e5a:	48 8d 0d bf 01 00 00 	leaq	447(%rip), %rcx
+100000e61:	8a 04 01 	movb	(%rcx,%rax), %al
+100000e64:	eb 02 	jmp	2 <_Func8+0x28>
+100000e66:	31 c0 	xorl	%eax, %eax
+100000e68:	0f be c0 	movsbl	%al, %eax
+100000e6b:	5d 	popq	%rbp
+100000e6c:	c3 	retq
+100000e6d:	0f 1f 00 	nopl	(%rax)
+100000e70:	55 	pushq	%rbp
+100000e71:	48 89 e5 	movq	%rsp, %rbp
+100000e74:	41 56 	pushq	%r14
+100000e76:	53 	pushq	%rbx
+100000e77:	4c 8d 35 a2 01 00 00 	leaq	418(%rip), %r14
+100000e7e:	49 8d b6 50 ff ff ff 	leaq	-176(%r14), %rsi
+100000e85:	48 8d 3d f4 00 00 00 	leaq	244(%rip), %rdi
+100000e8c:	31 c0 	xorl	%eax, %eax
+100000e8e:	e8 af 00 00 00 	callq	175
+100000e93:	48 8d 3d ec 00 00 00 	leaq	236(%rip), %rdi
+100000e9a:	48 8d 1d cf 00 00 00 	leaq	207(%rip), %rbx
+100000ea1:	31 c0 	xorl	%eax, %eax
+100000ea3:	48 89 de 	movq	%rbx, %rsi
+100000ea6:	e8 97 00 00 00 	callq	151
+100000eab:	4c 89 f6 	movq	%r14, %rsi
+100000eae:	48 29 de 	subq	%rbx, %rsi
+100000eb1:	48 8d 3d d4 00 00 00 	leaq	212(%rip), %rdi
+100000eb8:	31 c0 	xorl	%eax, %eax
+100000eba:	e8 83 00 00 00 	callq	131
+100000ebf:	48 8d 3d cd 00 00 00 	leaq	205(%rip), %rdi
+100000ec6:	31 c0 	xorl	%eax, %eax
+100000ec8:	4c 89 f6 	movq	%r14, %rsi
+100000ecb:	e8 72 00 00 00 	callq	114
+100000ed0:	48 8d 3d c2 00 00 00 	leaq	194(%rip), %rdi
+100000ed7:	48 8d 35 42 01 10 00 	leaq	1048898(%rip), %rsi
+100000ede:	31 c0 	xorl	%eax, %eax
+100000ee0:	e8 5d 00 00 00 	callq	93
+100000ee5:	48 8d 3d b3 00 00 00 	leaq	179(%rip), %rdi
+100000eec:	48 8d 35 4d ff ff ff 	leaq	-179(%rip), %rsi
+100000ef3:	31 c0 	xorl	%eax, %eax
+100000ef5:	e8 48 00 00 00 	callq	72
+100000efa:	48 8d 3d a4 00 00 00 	leaq	164(%rip), %rdi
+100000f01:	48 8d 35 68 ff ff ff 	leaq	-152(%rip), %rsi
+100000f08:	31 c0 	xorl	%eax, %eax
+100000f0a:	e8 33 00 00 00 	callq	51
+100000f0f:	48 8d 1d 95 00 00 00 	leaq	149(%rip), %rbx
+100000f16:	31 f6 	xorl	%esi, %esi
+100000f18:	31 c0 	xorl	%eax, %eax
+100000f1a:	48 89 df 	movq	%rbx, %rdi
+100000f1d:	e8 20 00 00 00 	callq	32
+100000f22:	31 f6 	xorl	%esi, %esi
+100000f24:	31 c0 	xorl	%eax, %eax
+100000f26:	48 89 df 	movq	%rbx, %rdi
+100000f29:	e8 14 00 00 00 	callq	20
+100000f2e:	31 f6 	xorl	%esi, %esi
+100000f30:	31 c0 	xorl	%eax, %eax
+100000f32:	48 89 df 	movq	%rbx, %rdi
+100000f35:	e8 08 00 00 00 	callq	8
+100000f3a:	31 c0 	xorl	%eax, %eax
+100000f3c:	5b 	popq	%rbx
+100000f3d:	41 5e 	popq	%r14
+100000f3f:	5d 	popq	%rbp
+100000f40:	c3 	retq
+
+_Func1:
+100000dd0:	55 	pushq	%rbp
+100000dd1:	48 89 e5 	movq	%rsp, %rbp
+100000dd4:	40 80 ff 07 	cmpb	$7, %dil
+100000dd8:	7f 20 	jg	32 <_Func1+0x2A>
+100000dda:	48 0f be c7 	movsbq	%dil, %rax
+100000dde:	48 8d 0d 3b 02 10 00 	leaq	1049147(%rip), %rcx
+100000de5:	48 0f be 04 01 	movsbq	(%rcx,%rax), %rax
+100000dea:	48 c1 e0 0c 	shlq	$12, %rax
+100000dee:	48 8d 0d 2b 02 00 00 	leaq	555(%rip), %rcx
+100000df5:	8a 04 01 	movb	(%rcx,%rax), %al
+100000df8:	eb 02 	jmp	2 <_Func1+0x2C>
+100000dfa:	31 c0 	xorl	%eax, %eax
+100000dfc:	0f be c0 	movsbl	%al, %eax
+100000dff:	5d 	popq	%rbp
+100000e00:	c3 	retq
+100000e01:	66 66 66 66 66 66 2e 0f 1f 84 00 00 00 00 00 	nopw	%cs:(%rax,%rax)
+
+_Func4:
+100000e10:	55 	pushq	%rbp
+100000e11:	48 89 e5 	movq	%rsp, %rbp
+100000e14:	83 ff 07 	cmpl	$7, %edi
+100000e17:	7f 1f 	jg	31 <_Func4+0x28>
+100000e19:	48 63 c7 	movslq	%edi, %rax
+100000e1c:	48 8d 0d fd 01 10 00 	leaq	1049085(%rip), %rcx
+100000e23:	48 0f be 04 01 	movsbq	(%rcx,%rax), %rax
+100000e28:	48 c1 e0 0c 	shlq	$12, %rax
+100000e2c:	48 8d 0d ed 01 00 00 	leaq	493(%rip), %rcx
+100000e33:	8a 04 01 	movb	(%rcx,%rax), %al
+100000e36:	eb 02 	jmp	2 <_Func4+0x2A>
+100000e38:	31 c0 	xorl	%eax, %eax
+100000e3a:	0f be c0 	movsbl	%al, %eax
+100000e3d:	5d 	popq	%rbp
+100000e3e:	c3 	retq
+100000e3f:	90 	nop
+
+
+/*
+ * On my macbook
+  $  gcc -g -O3 spectre.c 
+  $  objdump -disassemble  a.out > o3.txt
+
+char Func8(uint64_t n)
+{
+   char y = 0;  
+   if ( n < 8) {
+       y = T[t[n]*4096];        
+   }
+   return y;    
+}
+  opcode  src => dst 
+  rax : return value
+  rip : program counter
+*/
+_Func8:
+100000e40:	55 	pushq	%rbp                      // save frame pointer, rbp
+100000e41:	48 89 e5 	movq	%rsp, %rbp        // create new frame pointer, rbp = rsp
+100000e44:	48 83 ff 07 	cmpq	$7, %rdi          // compare n <= 7
+100000e48:	77 1c 	ja	28 <_Func8+0x26>          // if greater, goto 100000e66
+
+100000e4a:	48 8d 05 cf 01 10 00 	leaq	1049039(%rip), %rax  // rax = t 
+100000e51:	48 0f be 04 38 	movsbq	(%rax,%rdi), %rax            // rax = t[n]
+100000e56:	48 c1 e0 0c 	shlq	$12, %rax                    // rax *= 4096
+100000e5a:	48 8d 0d bf 01 00 00 	leaq	447(%rip), %rcx      // rcx = T
+100000e61:	8a 04 01 	movb	(%rcx,%rax), %al             // al  = T[rax]
+100000e64:	eb 02 	jmp	2 <_Func8+0x28>                      // goto 100000e68
+
+100000e66:	31 c0 	xorl	%eax, %eax               // eax = 0 
+
+100000e68:	0f be c0 	movsbl	%al, %ea         // ea = al, R[7:0]
+100000e6b:	5d 	popq	%rbp                     // restore rbp
+100000e6c:	c3 	retq                             // return
+100000e6d:	0f 1f 00 	nopl	(%rax)           // nop
+
+_main:
+100000e70:	55 	pushq	%rbp
+100000e71:	48 89 e5 	movq	%rsp, %rbp
+100000e74:	41 56 	pushq	%r14
+100000e76:	53 	pushq	%rbx
+100000e77:	4c 8d 35 a2 01 00 00 	leaq	418(%rip), %r14
+100000e7e:	49 8d b6 50 ff ff ff 	leaq	-176(%r14), %rsi
+100000e85:	48 8d 3d f4 00 00 00 	leaq	244(%rip), %rdi
+100000e8c:	31 c0 	xorl	%eax, %eax
+100000e8e:	e8 af 00 00 00 	callq	175
+100000e93:	48 8d 3d ec 00 00 00 	leaq	236(%rip), %rdi
+100000e9a:	48 8d 1d cf 00 00 00 	leaq	207(%rip), %rbx
+100000ea1:	31 c0 	xorl	%eax, %eax
+100000ea3:	48 89 de 	movq	%rbx, %rsi
+100000ea6:	e8 97 00 00 00 	callq	151
+100000eab:	4c 89 f6 	movq	%r14, %rsi
+100000eae:	48 29 de 	subq	%rbx, %rsi
+100000eb1:	48 8d 3d d4 00 00 00 	leaq	212(%rip), %rdi
+100000eb8:	31 c0 	xorl	%eax, %eax
+100000eba:	e8 83 00 00 00 	callq	131
+100000ebf:	48 8d 3d cd 00 00 00 	leaq	205(%rip), %rdi
+100000ec6:	31 c0 	xorl	%eax, %eax
+100000ec8:	4c 89 f6 	movq	%r14, %rsi
+100000ecb:	e8 72 00 00 00 	callq	114
+100000ed0:	48 8d 3d c2 00 00 00 	leaq	194(%rip), %rdi
+100000ed7:	48 8d 35 42 01 10 00 	leaq	1048898(%rip), %rsi
+100000ede:	31 c0 	xorl	%eax, %eax
+100000ee0:	e8 5d 00 00 00 	callq	93
+100000ee5:	48 8d 3d b3 00 00 00 	leaq	179(%rip), %rdi
+100000eec:	48 8d 35 4d ff ff ff 	leaq	-179(%rip), %rsi
+100000ef3:	31 c0 	xorl	%eax, %eax
+100000ef5:	e8 48 00 00 00 	callq	72
+100000efa:	48 8d 3d a4 00 00 00 	leaq	164(%rip), %rdi
+100000f01:	48 8d 35 68 ff ff ff 	leaq	-152(%rip), %rsi
+100000f08:	31 c0 	xorl	%eax, %eax
+100000f0a:	e8 33 00 00 00 	callq	51
+100000f0f:	48 8d 1d 95 00 00 00 	leaq	149(%rip), %rbx
+100000f16:	31 f6 	xorl	%esi, %esi
+100000f18:	31 c0 	xorl	%eax, %eax
+100000f1a:	48 89 df 	movq	%rbx, %rdi
+100000f1d:	e8 20 00 00 00 	callq	32
+100000f22:	31 f6 	xorl	%esi, %esi
+100000f24:	31 c0 	xorl	%eax, %eax
+100000f26:	48 89 df 	movq	%rbx, %rdi
+100000f29:	e8 14 00 00 00 	callq	20
+100000f2e:	31 f6 	xorl	%esi, %esi
+100000f30:	31 c0 	xorl	%eax, %eax
+100000f32:	48 89 df 	movq	%rbx, %rdi
+100000f35:	e8 08 00 00 00 	callq	8
+100000f3a:	31 c0 	xorl	%eax, %eax
+100000f3c:	5b 	popq	%rbx
+100000f3d:	41 5e 	popq	%r14
+100000f3f:	5d 	popq	%rbp
+100000f40:	c3 	retq
+Disassembly of section __TEXT,__stubs:
+__stubs:
+100000f42:	ff 25 c8 00 00 00 	jmpq	*200(%rip)
+Disassembly of section __TEXT,__stub_helper:
+__stub_helper:
+100000f48:	4c 8d 1d b9 00 00 00 	leaq	185(%rip), %r11
+100000f4f:	41 53 	pushq	%r11
+100000f51:	ff 25 a9 00 00 00 	jmpq	*169(%rip)
+100000f57:	90 	nop
+100000f58:	68 00 00 00 00 	pushq	$0
+100000f5d:	e9 e6 ff ff ff 	jmp	-26 </var/folders/hr/vsnw8lrx1tg3_7_mzw8d27dw33g6qj/T/spectre-e75763.o+0xA5761356>
