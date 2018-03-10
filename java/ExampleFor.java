@@ -28,5 +28,8 @@ public class ExampleFor {
 	    	System.out.printf("Failed to decode:" + e.getMessage(), e);
 	        e.printStackTrace();
 	    }
+	    finally {
+		System.out.printf("Finally!\n");
+            }
     }
 }
