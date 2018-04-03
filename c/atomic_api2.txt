@@ -1,0 +1,174 @@
+00400440 <_atomic_fetch_and_add>:
+  400440:	0000000f 	sync
+  400444:	c0820000 	ll	v0,0(a0)
+  400448:	00450821 	addu	at,v0,a1
+  40044c:	e0810000 	sc	at,0(a0)
+  400450:	1020fffc 	beqz	at,400444 <_atomic_fetch_and_add+0x4>
+  400454:	00000000 	nop
+  400458:	0000000f 	sync
+  40045c:	03e00008 	jr	ra
+  400460:	00000000 	nop
+
+00400464 <_atomic_fetch_and_sub>:
+  400464:	0000000f 	sync
+  400468:	c0820000 	ll	v0,0(a0)
+  40046c:	00450823 	subu	at,v0,a1
+  400470:	e0810000 	sc	at,0(a0)
+  400474:	1020fffc 	beqz	at,400468 <_atomic_fetch_and_sub+0x4>
+  400478:	00000000 	nop
+  40047c:	0000000f 	sync
+  400480:	03e00008 	jr	ra
+  400484:	00000000 	nop
+
+00400488 <_atomic_fetch_and_or>:
+  400488:	0000000f 	sync
+  40048c:	c0820000 	ll	v0,0(a0)
+  400490:	00450825 	or	at,v0,a1
+  400494:	e0810000 	sc	at,0(a0)
+  400498:	1020fffc 	beqz	at,40048c <_atomic_fetch_and_or+0x4>
+  40049c:	00000000 	nop
+  4004a0:	0000000f 	sync
+  4004a4:	03e00008 	jr	ra
+  4004a8:	00000000 	nop
+
+004004ac <_atomic_fetch_and_and>:
+  4004ac:	0000000f 	sync
+  4004b0:	c0820000 	ll	v0,0(a0)
+  4004b4:	00450825 	or	at,v0,a1
+  4004b8:	e0810000 	sc	at,0(a0)
+  4004bc:	1020fffc 	beqz	at,4004b0 <_atomic_fetch_and_and+0x4>
+  4004c0:	00000000 	nop
+  4004c4:	0000000f 	sync
+  4004c8:	03e00008 	jr	ra
+  4004cc:	00000000 	nop
+
+004004d0 <_atomic_fetch_and_xor>:
+  4004d0:	0000000f 	sync
+  4004d4:	c0820000 	ll	v0,0(a0)
+  4004d8:	00450826 	xor	at,v0,a1
+  4004dc:	e0810000 	sc	at,0(a0)
+  4004e0:	1020fffc 	beqz	at,4004d4 <_atomic_fetch_and_xor+0x4>
+  4004e4:	00000000 	nop
+  4004e8:	0000000f 	sync
+  4004ec:	03e00008 	jr	ra
+  4004f0:	00000000 	nop
+
+004004f4 <_atomic_fetch_and_nand>:
+  4004f4:	0000000f 	sync
+  4004f8:	c0820000 	ll	v0,0(a0)
+  4004fc:	00450824 	and	at,v0,a1
+  400500:	00200827 	nor	at,at,zero
+  400504:	e0810000 	sc	at,0(a0)
+  400508:	1020fffb 	beqz	at,4004f8 <_atomic_fetch_and_nand+0x4>
+  40050c:	00000000 	nop
+  400510:	0000000f 	sync
+  400514:	03e00008 	jr	ra
+  400518:	00000000 	nop
+
+0040051c <_atomic_add_and_fetch>:
+  40051c:	0000000f 	sync
+  400520:	c0820000 	ll	v0,0(a0)
+  400524:	00450821 	addu	at,v0,a1
+  400528:	e0810000 	sc	at,0(a0)
+  40052c:	1020fffc 	beqz	at,400520 <_atomic_add_and_fetch+0x4>
+  400530:	00451021 	addu	v0,v0,a1
+  400534:	0000000f 	sync
+  400538:	03e00008 	jr	ra
+  40053c:	00000000 	nop
+
+00400540 <_atomic_sub_and_fetch>:
+  400540:	0000000f 	sync
+  400544:	c0820000 	ll	v0,0(a0)
+  400548:	00450823 	subu	at,v0,a1
+  40054c:	e0810000 	sc	at,0(a0)
+  400550:	1020fffc 	beqz	at,400544 <_atomic_sub_and_fetch+0x4>
+  400554:	00451023 	subu	v0,v0,a1
+  400558:	0000000f 	sync
+  40055c:	03e00008 	jr	ra
+  400560:	00000000 	nop
+
+00400564 <_atomic_or_and_fetch>:
+  400564:	0000000f 	sync
+  400568:	c0820000 	ll	v0,0(a0)
+  40056c:	00450825 	or	at,v0,a1
+  400570:	e0810000 	sc	at,0(a0)
+  400574:	1020fffc 	beqz	at,400568 <_atomic_or_and_fetch+0x4>
+  400578:	00451025 	or	v0,v0,a1
+  40057c:	0000000f 	sync
+  400580:	03e00008 	jr	ra
+  400584:	00000000 	nop
+
+00400588 <_atomic_and_and_fetch>:
+  400588:	0000000f 	sync
+  40058c:	c0820000 	ll	v0,0(a0)
+  400590:	00450824 	and	at,v0,a1
+  400594:	e0810000 	sc	at,0(a0)
+  400598:	1020fffc 	beqz	at,40058c <_atomic_and_and_fetch+0x4>
+  40059c:	00451024 	and	v0,v0,a1
+  4005a0:	0000000f 	sync
+  4005a4:	03e00008 	jr	ra
+  4005a8:	00000000 	nop
+
+004005ac <_atomic_xor_and_fetch>:
+  4005ac:	0000000f 	sync
+  4005b0:	c0820000 	ll	v0,0(a0)
+  4005b4:	00450826 	xor	at,v0,a1
+  4005b8:	e0810000 	sc	at,0(a0)
+  4005bc:	1020fffc 	beqz	at,4005b0 <_atomic_xor_and_fetch+0x4>
+  4005c0:	00451026 	xor	v0,v0,a1
+  4005c4:	0000000f 	sync
+  4005c8:	03e00008 	jr	ra
+  4005cc:	00000000 	nop
+
+004005d0 <_atomic_nand_and_fetch>:
+  4005d0:	0000000f 	sync
+  4005d4:	c0820000 	ll	v0,0(a0)
+  4005d8:	00451024 	and	v0,v0,a1
+  4005dc:	00400827 	nor	at,v0,zero
+  4005e0:	e0810000 	sc	at,0(a0)
+  4005e4:	1020fffb 	beqz	at,4005d4 <_atomic_nand_and_fetch+0x4>
+  4005e8:	00401027 	nor	v0,v0,zero
+  4005ec:	0000000f 	sync
+  4005f0:	03e00008 	jr	ra
+  4005f4:	00000000 	nop
+
+004005f8 <_atomic_bool_compare_and_swap>:
+  4005f8:	0000000f 	sync
+  4005fc:	c0830000 	ll	v1,0(a0)
+  400600:	14650006 	bne	v1,a1,40061c <_atomic_bool_compare_and_swap+0x24>
+  400604:	24020000 	li	v0,0
+  400608:	00c00825 	move	at,a2
+  40060c:	e0810000 	sc	at,0(a0)
+  400610:	1020fffa 	beqz	at,4005fc <_atomic_bool_compare_and_swap+0x4>
+  400614:	24020001 	li	v0,1
+  400618:	0000000f 	sync
+  40061c:	03e00008 	jr	ra
+  400620:	00000000 	nop
+
+00400624 <_atomic_val_compare_and_swap>:
+  400624:	0000000f 	sync
+  400628:	c0820000 	ll	v0,0(a0)
+  40062c:	14450005 	bne	v0,a1,400644 <_atomic_val_compare_and_swap+0x20>
+  400630:	00c00825 	move	at,a2
+  400634:	e0810000 	sc	at,0(a0)
+  400638:	1020fffb 	beqz	at,400628 <_atomic_val_compare_and_swap+0x4>
+  40063c:	00000000 	nop
+  400640:	0000000f 	sync
+  400644:	03e00008 	jr	ra
+  400648:	00000000 	nop
+
+0040064c <_atomic_exchange>:
+  40064c:	c0820000 	ll	v0,0(a0)
+  400650:	00a00825 	move	at,a1
+  400654:	e0810000 	sc	at,0(a0)
+  400658:	1020fffc 	beqz	at,40064c <_atomic_exchange>
+  40065c:	00000000 	nop
+  400660:	0000000f 	sync
+  400664:	03e00008 	jr	ra
+  400668:	00000000 	nop
+
+0040066c <_atomic_lock_release>:
+  40066c:	0000000f 	sync
+  400670:	ac800000 	sw	zero,0(a0)
+  400674:	03e00008 	jr	ra
+  400678:	00000000 	nop
