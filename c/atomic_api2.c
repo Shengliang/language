@@ -36,7 +36,7 @@ uint32_t _atomic_fetch_and_or(uint32_t* ptr, uint32_t value) {
       return  __sync_fetch_and_or(ptr, value);
 }
 uint32_t _atomic_fetch_and_and(uint32_t* ptr, uint32_t value) {
-      return  __sync_fetch_and_or(ptr, value);
+      return  __sync_fetch_and_and(ptr, value);
 }
 uint32_t _atomic_fetch_and_xor(uint32_t* ptr, uint32_t value) {
       return  __sync_fetch_and_xor(ptr, value);

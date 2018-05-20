@@ -34,7 +34,7 @@
 004004ac <_atomic_fetch_and_and>:
   4004ac:	0000000f 	sync
   4004b0:	c0820000 	ll	v0,0(a0)
-  4004b4:	00450825 	or	at,v0,a1
+  4004b4:	00450824 	and	at,v0,a1
   4004b8:	e0810000 	sc	at,0(a0)
   4004bc:	1020fffc 	beqz	at,4004b0 <_atomic_fetch_and_and+0x4>
   4004c0:	00000000 	nop
