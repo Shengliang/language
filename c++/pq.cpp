@@ -1,9 +1,10 @@
+// g++ -std=c++11 pq.cpp
+
 #include <functional>
 #include <queue>
 #include <vector>
 #include <iostream>
 #include <tuple>
- 
 using namespace std;
 typedef tuple<int, int> P;
 
