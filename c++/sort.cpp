@@ -31,23 +31,17 @@ int main(void) {
        Person *p = &arr[i];
        cout << p->age << " " << p->name << endl;
     }
-    vector<int> vec = {41,42,43,4, 40, 45, 44, 443,445};
+    vector<int> vec = {41,42,43,4, 40, 45, 44, 443,445, 445445444, 445445446, 445445445, 444, 445};
     function<bool(int, int)> mygreater = [](int a, int b) {
 	    string sa = to_string(a);
 	    string sb = to_string(b);
 	    int la = sa.length();
 	    int lb = sb.length();
-	    int len = min(la, lb);
-	    int i = 0;
-	    for(i = 0; i < len; i++) {
-		    if (sa[i] > sb[i]) {
-			    return true;
+	    int len = max(la, lb);
+	    for(int i = 0; i < len; i++) {
+		    if (sa[i%la] != sb[i%lb]) {
+			return (sa[i%la] > sb[i%lb]);
 		    }
-	    }
-	    if (la > lb) {
-		    return sa[i] > sb[0];
-	    } else {
-		    return sa[0] > sb[i];
 	    }
 	    return false;
     };
