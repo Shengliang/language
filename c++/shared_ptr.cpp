@@ -4,9 +4,16 @@
 #include <memory>
 
 class C128 {
+public:
   unsigned char buffer[128];
 };
 
+void func1(const std::shared_ptr<C128> & sptr) {
+	sptr->buffer[0] = 'A';
+}
+void func2(const std::shared_ptr<const C128> & sptr) {
+	std::cout << sptr->buffer[0] << std::endl;
+}
 int main () {
   C128 * p128 = new (C128);
   int *p1 = new (int);
@@ -14,6 +21,9 @@ int main () {
   std::shared_ptr<C128> c128(p128);
   std::shared_ptr<int> foo(p1);
   std::shared_ptr<int> bar(p2);
+
+  func1(c128);
+  func2(c128);
 
   auto print = [&foo,&bar]{
   std::cout << " &foo: " << &foo

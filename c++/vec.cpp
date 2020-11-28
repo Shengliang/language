@@ -30,6 +30,11 @@ int main(void) {
 
  }
 
+  std::vector<char> a = {'a','b','c'};
+
+  std::vector<char> b(a.data(), a.data()+a.size());
+
+  for(auto x: b) cout << x << std::endl;
 
  return 0;
 }

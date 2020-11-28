@@ -7,6 +7,9 @@
 #include <unordered_map>
 #include <map>
 #include <string>
+#include<cstdlib>
+#include<cstdio>
+#include<cstring>
 
 using namespace std;
 
@@ -15,8 +18,42 @@ bool comp(int x, int y) {
 }
 typedef bool (*comp_func)(int x, int y);
 bool mysort (string a, string b) { return a.length() > b.length(); }
+struct Key {
+public:
+   string name;
+   Key(int i) {  name = to_string(i); }
+};
+
+
+typedef bool (*cmp_key_func)(const Key *a, const Key *b);
+bool cmp_key(const Key *a, const Key *b) {
+	if (a->name.length() == b->name.length()) {
+          return memcmp(a->name.c_str(), b->name.c_str(), b->name.length()) < 0;
+	} else {
+	   return a->name.length() < b->name.length();
+	}
+	// return a->name < b->name;
+}
 
 int main() {
+    map<const Key*, Key*, cmp_key_func> mp(cmp_key);
+
+    for (int i = 0; i < 10; ++i) {
+       Key *a = new Key(i);
+       mp[a] = a;
+    }
+
+    for (int i = 0; i < 10; ++i) {
+       Key x(i);
+       cout << mp[&x] << " " << mp[&x]->name << endl;
+    }
+
+    for(auto & e : mp) {
+	    cout << e.first << " " << e.second << " " << e.second->name << endl;
+	    delete e.second;
+    }
+
+
     // map word count to a list word lengths with the same word count.
     map<int, vector<int>> wdcnt2len_map;
     
