@@ -8,7 +8,11 @@
 using namespace std;
 
 namespace Example {
-namespace {
+class B {
+public:
+	inline B(int x = __LINE__ ) : v(x) { cout << __FILE__ << " " << __LINE__ << endl; }
+	int v;
+};
 
 template <typename T>
 inline T const& Max(T const & a, T const& b)
@@ -22,12 +26,11 @@ inline bool comp(T const & a, T const& b)
   return a < b;
 }
 
-}; // namespace
 
 template <class KType, class VType>
 class A {
 private:
-  vector<VType> values_; 
+  vector<VType> values_;
   A(const map<KType, VType>& hmap) : hmap_(hmap) {
     for(auto e : hmap_) {
         keys_.push_back(e.first);
@@ -35,7 +38,7 @@ private:
     }
   }
 protected:
-  vector<KType> keys_; 
+  vector<KType> keys_;
 
 public:
   map<KType, VType> hmap_;
@@ -51,23 +54,27 @@ public:
   void print() {
     for(const auto& k : keys_) {
       cout << k << endl;
-    } 
+    }
     for(const auto& v : values_) {
       cout << v << endl;
-    } 
-    cout << *std::max_element(values_.begin(), values_.end(), comp<VType>); 
+    }
+    cout << *std::max_element(values_.begin(), values_.end(), comp<VType>) << endl;
   }
 };
 
 } // namespace Example
 
+
 using namespace Example;
 
 int main(int argc, char* argv[]) {
+	B a(__LINE__);
+	B b(__LINE__);
+	cout << a.v << " " << b.v << endl;
   map<string, int> persons;
-  persons["Alice"] = 24;
-  persons["Bob"] = 25;
-  persons["David"] = 26;
+  persons["Alice"] = 44;
+  persons["Bob"] = 45;
+  persons["David"] = 46;
   shared_ptr<A<string, int>> sp_A = A<string, int>::Create(persons);
   sp_A->print();
   return 0;
