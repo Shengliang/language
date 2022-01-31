@@ -4,5 +4,5 @@ http://www.monodevelop.com/
 http://www.mono-project.com/
 
 # Install
-sudo apt-get install monodevelop
+sudo apt install mono-complete
 

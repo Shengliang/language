@@ -1,4 +1,5 @@
 // mcs hello.cs
+// mcs -out:hello.exe hello.cs
 // mono hello.exe
 using System;
  
