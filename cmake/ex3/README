@@ -1,0 +1,6 @@
+How to make/compile/link?
+
+mkdir out
+cd out
+cmake ..
+make
