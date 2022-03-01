@@ -1,0 +1,16 @@
+
+mysql> SELECT table_schema "DB Name",         ROUND(SUM(data_length + index_length) / 1024 / 1024/1024, 1) "DB Size in GB"  FROM information_schema.tables  GROUP BY table_schema;
++--------------------+---------------+
+| DB Name            | DB Size in GB |
++--------------------+---------------+
+| information_schema |           0.0 |
+| mysql              |           0.0 |
+| performance_schema |           0.0 |
+| sbtest             |          22.0 |
+| sys                |           0.0 |
++--------------------+---------------+
+5 rows in set (0.09 sec)
+
+mysql> drop database sbtest;
+Query OK, 100 rows affected (1.21 sec)
+

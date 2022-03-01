@@ -4,10 +4,10 @@ source $(dirname $0)/config.sh
 
 MYDB=sbtest
 TableSize=1000000
-TableCount=10
+TableCount=25
 EVENTS=0
 TIME=300
-ThreadCount=10
+ThreadCount=25
 LUA=oltp_read_write
 
 
