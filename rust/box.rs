@@ -39,12 +39,15 @@ fn main() {
         top_left: origin(),
         bottom_right: Point { x: 3.0, y: -4.0, z: 0.0 }
     };
+    let raw_p1: *const Rectangle = &rectangle;
 
     // Heap allocated rectangle
     let boxed_rectangle: Box<Rectangle> = Box::new(Rectangle {
         top_left: origin(),
         bottom_right: Point { x: 3.0, y: -4.0, z: 0.0 },
     });
+    let raw_p2: *const Box<Rectangle> = &boxed_rectangle;
+    let raw_p3: *const Rectangle = &(*boxed_rectangle);
 
     // The output of functions can be boxed
     let boxed_point: Box<Point> = Box::new(origin());
@@ -62,6 +65,11 @@ fn main() {
              mem::size_of_val(&boxed_point));
     println!("Boxed rectangle occupies {} bytes on the stack",
              mem::size_of_val(&boxed_rectangle));
+
+    println!("stack addres{:#16x}", raw_p1 as u64);
+    println!("stack address{:#16x}", raw_p2 as u64);
+    println!("heap address{:#16x}", raw_p3 as u64);
+
     println!("Boxed box occupies {} bytes on the stack",
              mem::size_of_val(&box_in_a_box));
 
