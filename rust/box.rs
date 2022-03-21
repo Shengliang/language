@@ -66,9 +66,9 @@ fn main() {
     println!("Boxed rectangle occupies {} bytes on the stack",
              mem::size_of_val(&boxed_rectangle));
 
-    println!("stack addres{:#16x}", raw_p1 as u64);
-    println!("stack address{:#16x}", raw_p2 as u64);
-    println!("heap address{:#16x}", raw_p3 as u64);
+    println!("stack addres {:p}", raw_p1);
+    println!("stack address {:p}", raw_p2);
+    println!("heap address {:p}", raw_p3);
 
     println!("Boxed box occupies {} bytes on the stack",
              mem::size_of_val(&box_in_a_box));
