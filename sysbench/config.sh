@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export TEST_USER=test
+export TEST_USER=ssl
 export TEST_PASS=rivos
 export PRIMARY_IP=127.0.0.1
 export PRIMARY_PORT=3306
