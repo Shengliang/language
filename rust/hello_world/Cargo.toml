@@ -1,0 +1,5 @@
+[workspace]
+members = [
+"dir1",
+"dir2",
+]
