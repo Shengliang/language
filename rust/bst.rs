@@ -1,9 +1,15 @@
+//use std::borrow::BorrowMut;
+use std::rc::Rc;
+use std::cell::RefCell;
+use std::cmp::Ordering;
+type OptNode = Option<Rc<RefCell<TreeNode>>>;
+
 // Definition for a binary tree node.
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
   pub val: i32,
-  pub left: Option<Rc<RefCell<TreeNode>>>,
-  pub right: Option<Rc<RefCell<TreeNode>>>,
+  pub left: OptNode,
+  pub right: OptNode,
 }
 
 impl TreeNode {
@@ -17,11 +23,6 @@ impl TreeNode {
   }
 }
 
-//use std::borrow::BorrowMut;
-use std::rc::Rc;
-use std::cell::RefCell;
-use std::cmp::Ordering;
-type OptNode = Option<Rc<RefCell<TreeNode>>>;
 
 pub fn search_bst_r(root: OptNode, val: i32) -> OptNode {
      if let Some(r) = &root {
