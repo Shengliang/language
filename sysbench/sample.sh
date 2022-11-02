@@ -23,12 +23,12 @@ ThreadCount=6
 EVENTS=30
 TIME=30
 
-USER=test
-PASS=p1234
+USER=ssl
+PASS=rivos
 PRIMARY_IP=127.0.0.1
 PRIMARY_PORT=3306
 DBIS=127.0.0.1,127.0.0.1,127.0.0.1
-PORTS=3306,3307,3308
+PORTS=3306,3306,3306
 DB=IMDb
 
 mysql -u $USER -h $PRIMARY_IP -P $PRIMARY_PORT -p$PASS  -e "source sampledb/imdb-create-tables.sql; source sampledb/mysqlsampledatabase.sql ;"

@@ -2,9 +2,9 @@
 
 source $(dirname $0)/config.sh
 
-MYDB=sbtest
-TableSize=1000000
-TableCount=100
+MYDB=sbtest2
+TableSize=10000
+TableCount=10
 EVENTS=30
 TIME=30
 ThreadCount=10
