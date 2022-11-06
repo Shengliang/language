@@ -79,6 +79,11 @@ struct Container {
 
 int main(int argc, char **argv) {
         Container sch;
+	if (argc == 3) {
+           std::cout << "run " << argv[1] << ":" << argv[2] << std::endl;
+           sch.run(argv[1], argv[2]);
+	   return 0;
+	}
 	sch.run("./libalt.so", "x1");
 	sch.run("./libfoo.so", "x1");
 	sch.run("./libfoo.so", "x2");

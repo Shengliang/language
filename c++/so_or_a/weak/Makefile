@@ -67,3 +67,10 @@ all: ${EXE} liba.so libb.so libc.so
 clean:
 	-rm -rf *.o  *.so 
 	-rm -rf ${EXE}
+
+
+run:
+	for p in prog1 prog2 prog3 prog4 prog5 prog6 prog7 prog8 prog67 prog76 prog678 prog687; do  \
+          echo run $$p; \
+	  ./$$p; \
+	done
