@@ -49,7 +49,7 @@ type Animals struct {
 }
 
 func (x Animals) Log() logr.Logger {
-     return x.log
+     return x.log.WithName(x.locomotion).WithValues("food", x.food).WithValues("sound", x.sound)
 }
 
 // Now we are indirectly implementing
@@ -83,10 +83,11 @@ func Foo() {
     ctx := context.Background()
     zl := zerolog.New(os.Stderr).Level(zerolog.DebugLevel)
     logger := zerologr.New(&zl);
-    ctx = logr.NewContext(ctx, logger.WithName("helper").WithValues("key1", "value1"))
+    ctx = logr.NewContext(ctx, logger.WithName("helper").WithValues("pkg", "mypackage"))
     helper(ctx)
 
-    m := map[string]Animaler{ "cow": 
+    m := map[string]Animaler{
+	    "cow":
          Animals{
                   SuperAnimals: SuperAnimals{
                      locomotion: "walk",
@@ -95,12 +96,34 @@ func Foo() {
                   sound: "moo",
                   log: logr.FromContextOrDiscard(ctx),
          },
+	    "brid":
+         Animals{
+                  SuperAnimals: SuperAnimals{
+                     locomotion: "fly",
+                  },
+                  food: "worms",
+                  sound: "peep",
+                  log: logr.FromContextOrDiscard(ctx),
+         },
+	    "snake":
+         Animals{
+                  SuperAnimals: SuperAnimals{
+                     locomotion: "slither",
+                  },
+                  food: "mice",
+                  sound: "hsss",
+                  log: logr.FromContextOrDiscard(ctx),
+         },
     }
     var animal string
     animal = "cow"
     m[animal].Eat()
     m[animal].Move()
     m[animal].Speak()
-    m[animal].Log().Info("start", "x", 42)
+    m[animal].Log().V(1).Info("msg", "x", 41)
+    animal = "brid"
+    m[animal].Log().V(0).Info("msg", "x", 42)
+    animal = "snake"
+    m[animal].Log().Info("msg", "x", 43)
 }
 
