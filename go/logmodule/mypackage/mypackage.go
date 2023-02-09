@@ -46,10 +46,12 @@ type Animals struct {
     food string
     sound string
     log logr.Logger
+    cnt int
 }
 
-func (x Animals) Log() logr.Logger {
-     return x.log.WithName(x.locomotion).WithValues("food", x.food).WithValues("sound", x.sound)
+func (x *Animals) Log() logr.Logger {
+	x.cnt+=1
+     return x.log.WithName(x.locomotion).WithValues("food", x.food).WithValues("sound", x.sound).WithValues("cnt", x.cnt)
 }
 
 // Now we are indirectly implementing
@@ -57,25 +59,25 @@ func (x Animals) Log() logr.Logger {
 // keywords.
 // We are about to define each method
 // declared in the Animaler interface.
-func (x Animals) Eat() {
+func (x *Animals) Eat() {
 	// this method will access the variable
 	// food in Animal class
 	fmt.Println(x.food)
 }
 
-func (x Animals) Move() {
+func (x *Animals) Move() {
 	// this method will access the variable
 	// locomotion in Animal class
 	fmt.Println(x.locomotion)
 }
 
-func (x Animals) Speak() {
+func (x *Animals) Speak() {
 	// this method will access the variable
 	// sound in Animal class
 	fmt.Println(x.sound)
 }
 
-func (x Animals) Error() {
+func (x *Animals) Error() {
 	fmt.Println("Invalid query entered!")
 }
 
@@ -88,7 +90,7 @@ func Foo() {
 
     m := map[string]Animaler{
 	    "cow":
-         Animals{
+         &Animals{
                   SuperAnimals: SuperAnimals{
                      locomotion: "walk",
                   },
@@ -97,7 +99,7 @@ func Foo() {
                   log: logr.FromContextOrDiscard(ctx),
          },
 	    "brid":
-         Animals{
+         &Animals{
                   SuperAnimals: SuperAnimals{
                      locomotion: "fly",
                   },
@@ -106,7 +108,7 @@ func Foo() {
                   log: logr.FromContextOrDiscard(ctx),
          },
 	    "snake":
-         Animals{
+         &Animals{
                   SuperAnimals: SuperAnimals{
                      locomotion: "slither",
                   },
@@ -121,6 +123,8 @@ func Foo() {
     m[animal].Move()
     m[animal].Speak()
     m[animal].Log().V(1).Info("msg", "x", 41)
+    m[animal].Log().V(1).Info("msg", "y", 107)
+    m[animal].Log().V(1).Info("msg", "z", 314)
     animal = "brid"
     m[animal].Log().V(0).Info("msg", "x", 42)
     animal = "snake"
