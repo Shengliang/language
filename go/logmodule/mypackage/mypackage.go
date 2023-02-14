@@ -20,10 +20,15 @@ import (
     "github.com/rs/zerolog"
 )
 
-func helper(ctx context.Context) {
-    logger := logr.FromContextOrDiscard(ctx)
-    logger.Info("hello from helper", "logger size", unsafe.Sizeof(logger), "&logger size", unsafe.Sizeof(&logger))
+type logrContextKey struct{}
+
+func MyFromContextOrDiscard(ctx context.Context) (*logr.Logger) {
+    if myLog, ok := ctx.Value(logrContextKey{}).(*logr.Logger); ok {
+	    return myLog
+    }
+    return nil
 }
+
 // Animal is the name we want but since we are
 // to use it as an interface, we will change
 // the name into Animaler.
@@ -56,7 +61,7 @@ type Animals struct {
     SuperAnimals
     food string
     sound string
-    log logr.Logger
+    log *logr.Logger
     messages chan int
     cnt uint64
     run_cnt uint64
@@ -151,8 +156,11 @@ func Foo() {
     ctx := context.Background()
     zl := zerolog.New(os.Stderr).Level(zerolog.DebugLevel)
     logger := zerologr.New(&zl);
-    ctx = logr.NewContext(ctx, logger.WithName("Foo").WithValues("pkg", "mypackage"))
-    helper(ctx)
+    myLogObj := logger.WithName("Foo").WithValues("pkg", "mypackage")
+    ctx = context.WithValue(ctx, logrContextKey{}, &myLogObj)
+    myLog:= MyFromContextOrDiscard(ctx)
+
+    myLog.Info("log size info", "logger size", unsafe.Sizeof(*myLog), "&logger size", unsafe.Sizeof(myLog))
 
     m := map[string]Animaler{
 	    "cow":
@@ -163,7 +171,7 @@ func Foo() {
                   },
                   food: "grass",
                   sound: "moo",
-                  log: logr.FromContextOrDiscard(ctx),
+                  log: MyFromContextOrDiscard(ctx),
 		  messages: make(chan int),
          },
 	    "brid":
@@ -174,7 +182,7 @@ func Foo() {
                   },
                   food: "worms",
                   sound: "peep",
-                  log: logr.FromContextOrDiscard(ctx),
+                  log: MyFromContextOrDiscard(ctx),
 		  messages: make(chan int),
          },
 	    "snake":
@@ -185,7 +193,7 @@ func Foo() {
                   },
                   food: "mice",
                   sound: "hsss",
-                  log: logr.FromContextOrDiscard(ctx),
+                  log: MyFromContextOrDiscard(ctx),
 		  messages: make(chan int),
          },
     }
