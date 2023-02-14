@@ -6,11 +6,14 @@ package mypackage
 
 import (
     "fmt"
+    "unsafe"
     "time"
+    "runtime"
     "sync"
     "sync/atomic"
     "context"
     "strconv"
+    "strings"
     "os"
     "github.com/go-logr/logr"
     "github.com/go-logr/zerologr"
@@ -19,7 +22,7 @@ import (
 
 func helper(ctx context.Context) {
     logger := logr.FromContextOrDiscard(ctx)
-    logger.Info("hello from helper")
+    logger.Info("hello from helper", "logger size", unsafe.Sizeof(logger), "&logger size", unsafe.Sizeof(&logger))
 }
 // Animal is the name we want but since we are
 // to use it as an interface, we will change
@@ -91,17 +94,30 @@ func (x *Animals) Error() {
 	fmt.Println("Invalid query entered!")
 }
 
+
+func (x * Animals) goid() int {
+	var buf [64]byte
+	n := runtime.Stack(buf[:], false)
+	idField := strings.Fields(strings.TrimPrefix(string(buf[:n]), "goroutine "))[0]
+	id, err := strconv.Atoi(idField)
+	if err != nil {
+		panic(fmt.Sprintf("cannot get goroutine id: %v", err))
+	}
+	return id
+}
+
 func (x *Animals) Run(id int, Log2 logr.Logger) {
-    Log2.Info("RUN_BEGIN")
    //var Log logr.Logger = logr.FromContextOrDiscard(x.m_ctx).WithName("Run").WithValues("RUN_CNT", x.run_cnt)
-   var Log logr.Logger = x.Log().WithName("Run").WithValues("RUN_CNT", x.run_cnt)
+   var Log logr.Logger = x.Log().WithName("Run").WithValues("RUN_CNT", x.run_cnt).WithValues("BEGIN_TIME", time.Now()).WithValues("goid", x.goid())
+   Log.Info("Enter")
    run_cnt_id := atomic.AddUint64(&x.run_cnt, 1)
    for w := 0; w < 2; w++ {
-	Log.Info(strconv.FormatUint(run_cnt_id, 10), "logr", fmt.Sprintf("%p", &Log), "ID", id, "w", w);
+	//Log.Info(strconv.FormatUint(run_cnt_id, 10), "logr", fmt.Sprintf("%p", &Log), "ID", id, "w", w);
+	Log = Log.WithValues("run_cnt_id", strconv.FormatUint(run_cnt_id, 10)).WithValues("logr", fmt.Sprintf("%p", &Log)).WithValues("ID", id).WithValues("w", w);
         time.Sleep(100 * time.Millisecond)
     }
     x.messages <- id
-    Log2.Info("RUN_END")
+    Log.WithValues("END_TIME", time.Now()).Info("Exit");
 }
 func (x *Animals) Schedule() {
         //var Log logr.Logger = logr.FromContextOrDiscard(x.m_ctx).WithName("Schedule")
@@ -111,7 +127,7 @@ func (x *Animals) Schedule() {
 	defer func() {
 		Log.Info("Exit", "EndTime", time.Now())
 	}()
-	for id := 0; id < 2; id++ {
+	for id := 0; id < 5; id++ {
             wg.Add(1)
 	    go func(id int) {
 		 defer wg.Done()
