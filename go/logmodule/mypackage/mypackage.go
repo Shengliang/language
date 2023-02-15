@@ -9,12 +9,14 @@ import (
     "unsafe"
     "time"
     "runtime"
+    "runtime/debug"
     "sync"
     "sync/atomic"
     "context"
     "strconv"
     "strings"
     "os"
+    "path/filepath"
     "github.com/go-logr/logr"
     "github.com/go-logr/zerologr"
     "github.com/rs/zerolog"
@@ -22,7 +24,7 @@ import (
 
 type logrContextKey struct{}
 
-func MyFromContextOrDiscard(ctx context.Context) (*logr.Logger) {
+func LogrFromContext(ctx context.Context) (*logr.Logger) {
     if myLog, ok := ctx.Value(logrContextKey{}).(*logr.Logger); ok {
 	    return myLog
     }
@@ -69,7 +71,8 @@ type Animals struct {
 
 func (x *Animals) Log() logr.Logger {
      cnt := atomic.AddUint64(&x.cnt, 1)
-     return x.log.WithName(x.locomotion).WithValues("food", x.food).WithValues("sound", x.sound).WithValues("cnt", cnt)
+      _, filename, line, _ := runtime.Caller(1)
+     return x.log.WithName(filepath.Base(filename)).WithName(strconv.Itoa(line)).WithName(x.locomotion).WithValues("food", x.food).WithValues("sound", x.sound).WithValues("cnt", cnt)
 }
 
 // Now we are indirectly implementing
@@ -156,11 +159,16 @@ func Foo() {
     ctx := context.Background()
     zl := zerolog.New(os.Stderr).Level(zerolog.DebugLevel)
     logger := zerologr.New(&zl);
-    myLogObj := logger.WithName("Foo").WithValues("pkg", "mypackage")
+    myLogObj := logger.WithValues("pkg", "mypackage")
     ctx = context.WithValue(ctx, logrContextKey{}, &myLogObj)
-    myLog:= MyFromContextOrDiscard(ctx)
+    myLog:= func() (log logr.Logger) {
+      _, filename, line, _ := runtime.Caller(1)
+      log = LogrFromContext(ctx).WithName(filepath.Base(filename)).WithName(strconv.Itoa(line))
+      return log
+    }
 
-    myLog.Info("log size info", "logger size", unsafe.Sizeof(*myLog), "&logger size", unsafe.Sizeof(myLog))
+    debug.PrintStack()
+    myLog().Info("log size info", "ctx size:", unsafe.Sizeof(ctx), "logger size", unsafe.Sizeof(myLogObj), "&logger size", unsafe.Sizeof(&myLogObj))
 
     m := map[string]Animaler{
 	    "cow":
@@ -171,7 +179,7 @@ func Foo() {
                   },
                   food: "grass",
                   sound: "moo",
-                  log: MyFromContextOrDiscard(ctx),
+                  log: LogrFromContext(ctx),
 		  messages: make(chan int),
          },
 	    "brid":
@@ -182,7 +190,7 @@ func Foo() {
                   },
                   food: "worms",
                   sound: "peep",
-                  log: MyFromContextOrDiscard(ctx),
+                  log: LogrFromContext(ctx),
 		  messages: make(chan int),
          },
 	    "snake":
@@ -193,7 +201,7 @@ func Foo() {
                   },
                   food: "mice",
                   sound: "hsss",
-                  log: MyFromContextOrDiscard(ctx),
+                  log: LogrFromContext(ctx),
 		  messages: make(chan int),
          },
     }
