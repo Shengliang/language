@@ -14,7 +14,6 @@ import (
     "sync/atomic"
     "context"
     "strconv"
-    "strings"
     "os"
     "path/filepath"
     "github.com/go-logr/logr"
@@ -45,7 +44,7 @@ type Animaler interface {
 	Speak()
 	Error()
 	Log() logr.Logger
-	Run(int, logr.Logger)
+	Run(int)
 	Schedule()
 }
 
@@ -103,6 +102,7 @@ func (x *Animals) Error() {
 }
 
 
+/*
 func (x * Animals) goid() int {
 	var buf [64]byte
 	n := runtime.Stack(buf[:], false)
@@ -113,14 +113,14 @@ func (x * Animals) goid() int {
 	}
 	return id
 }
+*/
 
-func (x *Animals) Run(id int, Log2 logr.Logger) {
-   //var Log logr.Logger = logr.FromContextOrDiscard(x.m_ctx).WithName("Run").WithValues("RUN_CNT", x.run_cnt)
-   var Log logr.Logger = x.Log().WithName("Run").WithValues("RUN_CNT", x.run_cnt).WithValues("BEGIN_TIME", time.Now()).WithValues("goid", x.goid())
+func (x *Animals) Run(id int) {
+  
+   var Log logr.Logger = x.Log().WithName("Run").WithValues("RUN_CNT", atomic.LoadUint64(&x.run_cnt)).WithValues("BEGIN_TIME", time.Now())
    Log.Info("Enter")
    run_cnt_id := atomic.AddUint64(&x.run_cnt, 1)
    for w := 0; w < 2; w++ {
-	//Log.Info(strconv.FormatUint(run_cnt_id, 10), "logr", fmt.Sprintf("%p", &Log), "ID", id, "w", w);
 	Log = Log.WithValues("run_cnt_id", strconv.FormatUint(run_cnt_id, 10)).WithValues("logr", fmt.Sprintf("%p", &Log)).WithValues("ID", id).WithValues("w", w);
         time.Sleep(100 * time.Millisecond)
     }
@@ -139,7 +139,7 @@ func (x *Animals) Schedule() {
             wg.Add(1)
 	    go func(id int) {
 		 defer wg.Done()
-		 x.Run(id, Log.WithValues("id", id))
+		 x.Run(id)
 	    }(id)
 	}
 
