@@ -2,12 +2,12 @@
 
 source $(dirname $0)/config.sh
 
-MYDB=sbtest2
-TableSize=10000
-TableCount=10
+MYDB=ndbsmall
+TableSize=25000
+TableCount=250
 EVENTS=30
 TIME=30
-ThreadCount=10
+ThreadCount=25
 LUA=oltp_read_write
 
 run_query "drop database if exists $MYDB"

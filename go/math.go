@@ -40,6 +40,10 @@ func diag(x int, y int) float64 {
 	return Sqrt(zz)
 }
 
+func getCurve(weigths[] float64, x *[]float64, predictNum int) float64 {
+
+
+}
 func main() {
 	var x int
 	var y int
