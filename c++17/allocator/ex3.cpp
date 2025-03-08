@@ -8,7 +8,6 @@
 #include <thread>
 #include <vector>
 #include <cstdlib> // for std::aligned_alloc and std::free
-#include <scoped_allocator> // for std::scoped_allocator_adaptor
 
 // Custom aligned allocator with thread safety
 template <typename T, std::size_t Alignment = alignof(T)>
@@ -39,7 +38,6 @@ public:
     void deallocate(T* ptr, std::size_t n) noexcept {
         std::lock_guard<std::mutex> lock(mutex_); // Ensure thread safety
         std::free(ptr);
-	(void)n;
     }
 
 private:
@@ -70,13 +68,14 @@ using AlignedAllocatorA = AlignedAllocator<A>;
 using AlignedAllocatorB = AlignedAllocator<B>;
 
 // Define a tuple with custom allocators for A and B, and default allocator for C
-using MyTuple = std::tuple<A, B, C>;
+using MyTuple = std::tuple<
+    A, // Uses AlignedAllocatorA
+    B, // Uses AlignedAllocatorB
+    C  // Uses default allocator
+>;
 
-// Define a scoped allocator to propagate allocators to tuple elements
-using ScopedAllocator = std::scoped_allocator_adaptor<AlignedAllocatorA, AlignedAllocatorB>;
-
-// Define a list with the scoped allocator
-using MyList = std::list<MyTuple, ScopedAllocator>;
+// Define a list with the default allocator
+using MyList = std::list<MyTuple>;
 
 // Define the map with default allocator for Key and C, and custom allocators for A and B
 std::map<Key, MyList> mp;

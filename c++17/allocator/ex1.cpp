@@ -39,6 +39,7 @@ public:
     void deallocate(T* ptr, std::size_t n) noexcept {
         std::lock_guard<std::mutex> lock(mutex_); // Ensure thread safety
         std::free(ptr);
+	(void)n;
     }
 
 private:
@@ -67,12 +68,13 @@ using C = char; // Example type C
 // Define custom allocators for A and B
 using AlignedAllocatorA = AlignedAllocator<A>;
 using AlignedAllocatorB = AlignedAllocator<B>;
+using AlignedAllocatorC = AlignedAllocator<C>;
 
 // Define a tuple with custom allocators for A and B, and default allocator for C
 using MyTuple = std::tuple<A, B, C>;
 
 // Define a scoped allocator to propagate allocators to tuple elements
-using ScopedAllocator = std::scoped_allocator_adaptor<AlignedAllocatorA, AlignedAllocatorB>;
+using ScopedAllocator = std::scoped_allocator_adaptor<AlignedAllocatorA, AlignedAllocatorB, AlignedAllocatorC>;
 
 // Define a list with the scoped allocator
 using MyList = std::list<MyTuple, ScopedAllocator>;
