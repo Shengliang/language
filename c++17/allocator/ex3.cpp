@@ -69,8 +69,8 @@ using AlignedAllocatorB = AlignedAllocator<B>;
 
 // Define a tuple with custom allocators for A and B, and default allocator for C
 using MyTuple = std::tuple<
-    A, // Uses AlignedAllocatorA
-    B, // Uses AlignedAllocatorB
+    std::allocator_traits<AlignedAllocatorA>::value_type, // A (uses AlignedAllocatorA)
+    std::allocator_traits<AlignedAllocatorB>::value_type, // B (uses AlignedAllocatorB)
     C  // Uses default allocator
 >;
 
