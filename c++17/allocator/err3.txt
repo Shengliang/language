@@ -1,0 +1,10 @@
+g++ -std=c++17 -Wall -Wextra -O2 -c ex1.cpp -o ex1.o
+In file included from /usr/include/c++/11/list:63,
+                 from ex1.cpp:5:
+/usr/include/c++/11/bits/stl_list.h: In instantiation of ‘class std::__cxx11::list<std::tuple<double, float, char>, std::scoped_allocator_adaptor<AlignedAllocator<double>, AlignedAllocator<float, 4>, AlignedAllocator<char, 1> > >’:
+ex1.cpp:87:12:   required from here
+/usr/include/c++/11/bits/stl_list.h:572:64: error: static assertion failed: std::list must have the same value_type as its allocator
+  572 |       static_assert(is_same<typename _Alloc::value_type, _Tp>::value,
+      |                                                                ^~~~~
+/usr/include/c++/11/bits/stl_list.h:572:64: note: ‘std::integral_constant<bool, false>::value’ evaluates to false
+make: *** [Makefile:28: ex1.o] Error 1
