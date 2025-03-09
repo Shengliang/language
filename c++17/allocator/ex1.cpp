@@ -64,20 +64,16 @@ using Key = int; // Example key type
 using A = double; // Example type A
 using B = float; // Example type B
 using C = char; // Example type C
+// Define a tuple with custom allocators for A and B, and default allocator for C
+using MyTuple = std::tuple<A, B, C>;
 
 // Define custom allocators for A and B
 using AlignedAllocatorA = AlignedAllocator<A>;
 using AlignedAllocatorB = AlignedAllocator<B>;
 using AlignedAllocatorC = AlignedAllocator<C>;
+using AlignedAllocatorABC = AlignedAllocator<MyTuple>;
 
-// Define a tuple with custom allocators for A and B, and default allocator for C
-using MyTuple = std::tuple<A, B, C>;
-
-// Define a scoped allocator to propagate allocators to tuple elements
-using ScopedAllocator = std::scoped_allocator_adaptor<AlignedAllocatorA, AlignedAllocatorB, AlignedAllocatorC>;
-
-// Define a list with the scoped allocator
-using MyList = std::list<MyTuple, ScopedAllocator>;
+using MyList = std::list<MyTuple, AlignedAllocatorABC>;
 
 // Define the map with default allocator for Key and C, and custom allocators for A and B
 std::map<Key, MyList> mp;

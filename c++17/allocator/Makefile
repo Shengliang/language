@@ -5,13 +5,13 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -O2
 
 # Source files
 # SRCS = memory_management.cpp
-SRCS = ex1.cpp ex2.cpp
+SRCS = ex1.cpp ex2.cpp ex3.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 
 # Default target
-all: ex1 ex2
+all: ex1 ex2 ex3
 
 # Link the object files to create the executable
 ex1: ex1.o
@@ -29,7 +29,7 @@ ex3: ex3.o
 
 # Clean up build files
 clean:
-	rm -f $(OBJS) ex1 ex2
+	rm -f $(OBJS) ex1 ex2 ex3
 
 # Phony targets
 .PHONY: all clean
